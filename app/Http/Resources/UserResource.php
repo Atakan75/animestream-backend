@@ -16,11 +16,11 @@ class UserResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'email' => $this->email,
+            'name' => $this->name ? $this->name : null,
+            'email' => $this->email ? $this->email : null,
             'avatar' => $this->avatar ? config('app.url') . '/storage/user_avatars/' . md5($this->id) . '/' . $this->avatar->name : null,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'created_at' => $this->created_at ? $this->created_at : null,
+            'updated_at' => $this->updated_at ? $this->updated_at : null,
         ];
     }
 }
