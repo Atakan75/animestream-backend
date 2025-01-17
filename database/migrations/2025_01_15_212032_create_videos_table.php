@@ -11,16 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('anime_episodes', function (Blueprint $table) {
+        Schema::create('videos', function (Blueprint $table) {
             $table->id();
             $table->integer('specs');
-            $table->integer('anime_id');
-            $table->integer('season_id');
-            $table->integer('video_id');
-            $table->string('name');
-            $table->string('slug');
-            $table->text('summary');
-            $table->time('duration');
+            $table->tinyInteger('status')->description('0: waiting; 1: started; 2:processing; 3:success; 4:error');
+            $table->string('hls_path')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('anime_episodes');
+        Schema::dropIfExists('videos');
     }
 };

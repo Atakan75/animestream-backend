@@ -45,16 +45,13 @@ class UserController extends Controller
     {
         $user = $request->user();
 
-        // Eski avatarı sil
         $user->avatar()->delete();
 
-        // Yeni avatarı yükle
         $fileData = $fileService->uploadAvatar(
             $request->file('avatar'),
             $user->id
         );
 
-        // Veritabanına kaydet
         $avatar = $user->avatar()->create($fileData);
 
         return response_success([
