@@ -1,16 +1,14 @@
 <?php
-
 namespace App\Http\Controllers;
-
-use App\Models\User;
-
-use App\Services\FileService;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\UserAvatarRequest;
-
+use App\Models\User;
+use App\Services\FileService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 
 class UserController extends Controller
 {
@@ -20,7 +18,7 @@ class UserController extends Controller
 
         return response_success([
             'message' => 'User created successfully',
-            'user' => $user,
+            'user'    => $user,
         ], 200);
     }
 
@@ -29,7 +27,7 @@ class UserController extends Controller
         $user = User::where('email', $request->email)
             ->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        if (! $user || ! Hash::check($request->password, $user->password)) {
             return response_error('auth.failed', 401);
         }
 
@@ -37,7 +35,7 @@ class UserController extends Controller
 
         return response_success([
             'message' => 'User logged in successfully',
-            'token' => $token,
+            'token'   => $token,
         ], 200);
     }
 
@@ -56,7 +54,19 @@ class UserController extends Controller
 
         return response_success([
             'message' => 'Avatar başarıyla yüklendi',
-            'avatar' => $avatar,
+            'avatar'  => $avatar,
         ], 200);
+    }
+
+    public function stripeWebhook(Request $request)
+    {
+        $response = Http::withHeaders($request->header())->post('https://app.shiphack.co/api/stripe/webhook', $request->all());
+
+        return response()->json([
+            'status'  => $response->status(),
+            'body'    => $response->body(),
+            'headers' => $response->headers(),
+            'request' => $request->all(),
+        ], $response->status());
     }
 }
