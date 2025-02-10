@@ -60,7 +60,11 @@ class UserController extends Controller
 
     public function stripeWebhook(Request $request)
     {
-        $response = Http::withHeaders($request->header())->post('https://app.shiphack.co/api/stripe/webhook', $request->all());
+        $headers = collect($request->header())->except([
+            'host', 'content-length', 'expect', 'connection'
+        ])->toArray();
+
+        $response = Http::withHeaders($headers)->post('https://app.shiphack.co/api/stripe/webhook', $request->all());
 
         return response()->json([
             'status'  => $response->status(),
