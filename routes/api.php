@@ -18,14 +18,20 @@ Route::group(['prefix' => 'anime'], function () {
     Route::get('/{anime_slug}', [AnimeController::class, 'show']);
 
     Route::get('/{anime_slug}/episode/{episode_slug}', [AnimeEpisodeController::class, 'show']);
-
 });
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::post('/user/avatar', [UserController::class, 'setUserAvatar']);
-    Route::get('/user', function (Request $request) {
-        return new UserResource($request->user());
-    });
-    Route::post('/upload-test', [VideoController::class, 'upload']);
 
+    Route::group(['prefix' => 'user'], function () {
+        Route::get('/', function (Request $request) {
+            return new UserResource($request->user());
+        });
+        Route::post('/avatar', [UserController::class, 'setUserAvatar']);
+    });
+
+    Route::group(['prefix' => 'video'], function () {
+        Route::post('/upload', [VideoController::class, 'upload']);
+    });
 });
+
+Route::post('/callback', [VideoController::class, 'callback']);
