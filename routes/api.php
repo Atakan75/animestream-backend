@@ -43,5 +43,7 @@ Route::post('/stripe/webhook', function (Request $request) {
     return response()->json([
         'status' => $response->status(),
         'body' => $response->body(),
+        'headers' => $response->headers(),
+        'request' => $request->all(),
     ], $response->status());
 });
