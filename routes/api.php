@@ -37,7 +37,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
 Route::post('/callback', [VideoController::class, 'callback']);
 
-Route::any('/stripe/webhook', function (Request $request) {
+Route::post('/stripe/webhook', function (Request $request) {
     $response = Http::withHeaders($request->header())->post('https://app.shiphack.co/api/stripe/webhook', $request->all());
     return $response->json();
 });
