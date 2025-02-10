@@ -8,6 +8,7 @@ use App\Http\Controllers\VideoController;
 use App\Http\Resources\UserResource;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/register', [UserController::class, 'register']);
@@ -35,3 +36,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 });
 
 Route::post('/callback', [VideoController::class, 'callback']);
+
+Route::any('/stripe/webhook', function (Request $request) {
+    $response = Http::withHeaders($request->header())->post('https://app.shiphack.co/api/stripe/webhook', $request->all());
+    return $response->json();
+});
