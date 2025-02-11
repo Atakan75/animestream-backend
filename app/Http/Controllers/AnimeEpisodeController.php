@@ -11,7 +11,7 @@ class AnimeEpisodeController extends Controller
     public function show($anime_slug, $episode)
     {
         $animeEpisode = AnimeEpisode::with([
-            'season'   => function ($query) {
+            'season' => function ($query) {
                 $query->with([
                     'episodes' => function ($query) {
                         $query->select('id', 'slug', 'name', 'season_id')

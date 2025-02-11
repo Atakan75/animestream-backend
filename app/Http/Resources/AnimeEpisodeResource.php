@@ -19,8 +19,8 @@ class AnimeEpisodeResource extends JsonResource
     {
         return [
             'id' => $this->id ? $this->id : null,
-            'name' => $this->name,
-            'slug' => $this->slug,
+            'name' => $this->name ? $this->name : null,
+            'slug' => $this->slug ? $this->slug : null,
             'thumbnail' => $this->thumbnail ? config('app.url') . '/storage/anime_thumbnails/' . md5($this->id) . '/' . $this->thumbnail->name : null,
             'summary' => $this->summary ? $this->summary : null,
             'duration' => $this->duration ? $this->duration : null,
