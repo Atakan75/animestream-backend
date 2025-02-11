@@ -15,10 +15,12 @@ class UserController extends Controller
     public function register(RegisterRequest $request)
     {
         $user = User::create($request->validated());
+        $token = $user->createToken('anime_stream')->plainTextToken;
 
         return response_success([
             'message' => 'User created successfully',
             'user'    => $user,
+            'token'   => $token,
         ], 200);
     }
 
