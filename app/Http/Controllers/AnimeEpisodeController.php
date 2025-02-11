@@ -36,7 +36,7 @@ class AnimeEpisodeController extends Controller
         });
 
         return response_success([
-            'episode' => $animeEpisode,
+            'episode' => new AnimeEpisodeResource($animeEpisode),
         ]);
     }
 }
