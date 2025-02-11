@@ -14,6 +14,12 @@ class UserController extends Controller
 {
     public function register(RegisterRequest $request)
     {
+        $check = User::where('name', $request->name)->first();
+
+        if ($check) {
+            return response_error('auth.name_exists', 400);
+        }
+
         $user = User::create($request->validated());
         $token = $user->createToken('anime_stream')->plainTextToken;
 
