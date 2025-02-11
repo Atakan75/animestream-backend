@@ -21,7 +21,7 @@ class AnimeEpisodeController extends Controller
             },
             'comments' => function ($query) {
                 $query->with([
-                    'parent.parent.parent.parent.parent',
+                    'parent',
                     'user' => function ($query) {
                         $query->select('id', 'name');
                     },
