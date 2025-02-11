@@ -35,13 +35,6 @@ class AnimeEpisodeController extends Controller
             ])->where('slug', $episode)->first();
         });
 
-        defer(function () use ($animeEpisode) {
-            UserWatchHistory::create([
-                'user_id' => request()->user()->id,
-                'anime_episode_id' => $animeEpisode->id,
-            ]);
-        });
-
         return response_success([
             'episode' => new AnimeEpisodeResource($animeEpisode),
         ]);
