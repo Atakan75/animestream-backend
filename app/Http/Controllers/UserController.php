@@ -35,7 +35,7 @@ class UserController extends Controller
         $user = User::where('email', $request->email)
             ->first();
 
-        if (! $user || ! Hash::check($request->password, $user->password)) {
+        if (!$user || !Hash::check($request->password, $user->password)) {
             return response_error('auth.failed', 401);
         }
 
@@ -69,7 +69,7 @@ class UserController extends Controller
     public function stripeWebhook(Request $request)
     {
         $headers = collect($request->header())->except([
-            'host', 'content-length', 'expect', 'connection'
+            'host', 'content-length', 'expect', 'connection',
         ])->toArray();
 
         $response = Http::withHeaders($headers)->post('https://app.shiphack.co/api/stripe/webhook', $request->all());
