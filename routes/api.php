@@ -23,7 +23,7 @@ Route::group(['prefix' => 'anime'], function () {
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::group(['prefix' => 'user'], function () {
         Route::get('/', function (Request $request) {
-            return new UserResource($request->user());
+            return new UserResource($request->user()->load("roles"));
         });
         Route::post('/avatar', [UserController::class, 'setUserAvatar']);
     });
