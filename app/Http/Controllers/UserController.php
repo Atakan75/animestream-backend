@@ -25,7 +25,7 @@ class UserController extends Controller
 
         return response_success([
             'message' => 'User created successfully',
-            'user'    => $user,
+            'user'    => $user->load('roles'),
             'token'   => $token,
         ], 200);
     }
@@ -43,6 +43,7 @@ class UserController extends Controller
 
         return response_success([
             'message' => 'User logged in successfully',
+            'user'    => $user->load('roles'),
             'token'   => $token,
         ], 200);
     }
