@@ -21,12 +21,12 @@ class UserController extends Controller
         }
 
         $user = User::create($request->validated());
-        $token = $user->createToken('anime_stream')->plainTextToken;
+        $user->assignRole('user');
 
         return response_success([
             'message' => 'User created successfully',
             'user'    => $user->load('roles'),
-            'token'   => $token,
+            'token'   => $user->createToken('anime_stream')->plainTextToken,
         ], 200);
     }
 
