@@ -9,10 +9,11 @@ use App\Services\FileService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    public function register(RegisterRequest $request)
+    public function register(RegisterRequest $request, FileService $fileService)
     {
         $check = User::where('name', $request->name)->first();
 
@@ -22,6 +23,17 @@ class UserController extends Controller
 
         $user = User::create($request->validated());
         $user->assignRole('user');
+
+        $filePath = Storage::disk('public')->path('user_avatars/default/avatar.png');
+        $file = new \Illuminate\Http\UploadedFile($filePath, 'avatar.png', mime_content_type($filePath), null, true);
+        
+
+        $fileData = $fileService->uploadAvatar(
+            $file,
+            $user->id
+        );
+
+        $user->avatar()->create($fileData);
 
         return response_success([
             'message' => 'User created successfully',

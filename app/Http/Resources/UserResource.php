@@ -19,7 +19,9 @@ class UserResource extends JsonResource
             'name' => $this->name ? $this->name : null,
             'email' => $this->email ? $this->email : null,
             'avatar' => $this->avatar ? config('app.url') . '/storage/user_avatars/' . md5($this->id) . '/' . $this->avatar->name : null,
-            'roles' => $this->whenLoaded('roles'),
+            'roles' => $this->whenLoaded('roles', function () {
+                return $this->roles->pluck('name')->toArray();
+            }),
             'created_at' => $this->created_at ? $this->created_at : null,
             'updated_at' => $this->updated_at ? $this->updated_at : null,
         ];
