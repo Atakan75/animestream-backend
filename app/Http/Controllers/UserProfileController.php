@@ -14,10 +14,10 @@ class UserProfileController extends Controller
         $user = User::where('name', $username)->with('avatar')->first();
 
         if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
+            return response_error(['message' => 'User not found'], 404);
         }
 
-        return response()->json([
+        return response_success([
             'user' => new UserResource($user->load('roles')),
         ]);
     }
