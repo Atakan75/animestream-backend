@@ -5,6 +5,10 @@ use App\Http\Controllers\AnimeEpisodeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VideoController;
 
+
+use App\Http\Controllers\ProfileController;
+
+
 use App\Http\Resources\UserResource;
 
 use Illuminate\Http\Request;
@@ -12,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
+
+Route::get('/profile/{username}', [ProfileController::class, 'show']);
 
 Route::group(['prefix' => 'anime'], function () {
     Route::get('/', [AnimeController::class, 'index']);
