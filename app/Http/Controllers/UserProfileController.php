@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
+
+use App\Models\User;
 use App\Http\Resources\UserResource;
 
-class ProfileController extends Controller
+class UserProfileController extends Controller
 {
     public function show($username)
     {

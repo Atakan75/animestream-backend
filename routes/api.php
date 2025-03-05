@@ -1,23 +1,22 @@
 <?php
 
-use App\Http\Controllers\AnimeController;
-use App\Http\Controllers\AnimeEpisodeController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\VideoController;
-
-
-use App\Http\Controllers\ProfileController;
-
-
-use App\Http\Resources\UserResource;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\AnimeController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\VideoController;
+use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\AnimeEpisodeController;
+
+use App\Http\Resources\UserResource;
 
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
 
-Route::get('/profile/{username}', [ProfileController::class, 'show']);
+Route::group(['prefix'=> 'profile'], function () {
+    Route::get('/{username}', [UserProfileController::class, 'show']);
+});
 
 Route::group(['prefix' => 'anime'], function () {
     Route::get('/', [AnimeController::class, 'index']);
