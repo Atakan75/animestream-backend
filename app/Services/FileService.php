@@ -24,6 +24,22 @@ class FileService
         ];
     }
 
+    public function uploadThumbnail(UploadedFile $file, $animeID): array
+    {
+        $fileName = $this->generateFileName($file);
+        $path = $this->getAnimeThumbnailPath($animeID);
+
+        Storage::disk("public")->put($path . '/' . $fileName, file_get_contents($file), 'public');
+
+        return [
+            'name' => $fileName,
+            'mimetype' => $file->getClientMimeType(),
+            'type' => 'anime_thumbnails',
+            'size' => $file->getSize(),
+        ];
+    }
+
+
     private function generateFileName(UploadedFile $file): string
     {
         $name = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
@@ -34,5 +50,10 @@ class FileService
     private function getUserAvatarPath($userId): string
     {
         return 'user_avatars/' . md5($userId);
+    }
+
+    private function getAnimeThumbnailPath($animeId): string
+    {
+        return 'anime_thumbnails/' . md5($animeId);
     }
 }

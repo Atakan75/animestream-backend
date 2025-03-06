@@ -24,6 +24,9 @@ Route::group(['prefix' => 'anime'], function () {
     Route::get('/{anime_slug}', [AnimeController::class, 'show']);
 
     Route::get('/{anime_slug}/episode/{episode_slug}', [AnimeEpisodeController::class, 'show']);
+
+    
+    Route::post('/thumbnail/{id}', [AnimeController::class, 'setAnimeThumbnail']);
 });
 
 Route::group(['middleware' => 'auth:sanctum'], function () {

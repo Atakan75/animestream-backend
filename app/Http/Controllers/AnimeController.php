@@ -2,7 +2,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AnimeIndexRequest;
+use App\Http\Resources\AnimeResource;
 use App\Models\Anime;
+use App\Http\Requests\AnimeThumbnailRequest;
+use App\Services\FileService;
+
 
 class AnimeController extends Controller
 {
@@ -12,7 +16,11 @@ class AnimeController extends Controller
             'genres' => function ($query) {
                 $query->select('name');
             },
-        ]);
+            'seasons' => function ($query) {
+                $query->with('episodes');
+            },
+            'thumbnail'
+        ])->withCount('seasons');
 
         if ($request->has('search')) {
             $animes->where('title', 'like', '%' . $request->search . '%');
@@ -36,7 +44,7 @@ class AnimeController extends Controller
 
         return response_success([
             'message' => 'Animes retrieved successfully',
-            'animes'  => $animes,
+            'animes'  => AnimeResource::collection($animes),
         ], 200);
     }
 
@@ -61,4 +69,23 @@ class AnimeController extends Controller
             'anime'   => $anime,
         ], 200);
     }
+
+    public function setAnimeThumbnail($id, AnimeThumbnailRequest $request, FileService $fileService)
+    {
+        $anime = Anime::find($id);
+        $anime->thumbnail()->delete();
+
+        $fileData = $fileService->uploadThumbnail(
+            $request->file('thumbnail'),
+            $anime->id
+        );
+
+        $thumbnail = $anime->thumbnail()->create($fileData);
+
+        return response_success([
+            'message' => 'Thumbnail başarıyla yüklendi',
+            'thumbnail'  => $thumbnail,
+        ], 200);
+    }
 }
+    
