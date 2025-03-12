@@ -14,7 +14,7 @@ class UserProfileController extends Controller
         $user = User::where('name', $username)->with('avatar')->first();
 
         if (!$user) {
-            return response_error(['message' => 'User not found'], 404);
+            return response_error("User not found", 404);
         }
 
         return response_success([
