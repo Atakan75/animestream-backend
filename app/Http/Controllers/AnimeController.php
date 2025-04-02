@@ -75,8 +75,8 @@ class AnimeController extends Controller
         $anime = Anime::find($id);
         $anime->thumbnail()->delete();
 
-        $fileData = $fileService->uploadThumbnail(
-            $request->file('thumbnail'),
+        $fileData = $fileService->uploadAnimeThumbnail(
+            $request->file('anime_thumbnail'),
             $anime->id
         );
 

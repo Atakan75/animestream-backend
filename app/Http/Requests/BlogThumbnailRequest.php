@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AnimeThumbnailRequest extends FormRequest
+class BlogThumbnailRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,7 @@ class AnimeThumbnailRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'anime_thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'blog_thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }

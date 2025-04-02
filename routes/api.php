@@ -3,8 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\AnimeController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AnimeController;
 use App\Http\Controllers\VideoController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\AnimeEpisodeController;
@@ -24,8 +25,31 @@ Route::group(['prefix' => 'anime'], function () {
 
     Route::get('/{anime_slug}/episode/{episode_slug}', [AnimeEpisodeController::class, 'show']);
 
-    
-    Route::post('/thumbnail/{id}', [AnimeController::class, 'setAnimeThumbnail']);
+    //████████  ██████  ██████   ██████  
+    //   ██    ██    ██ ██   ██ ██    ██ 
+    //   ██    ██    ██ ██   ██ ██    ██ 
+    //   ██    ██    ██ ██   ██ ██    ██ 
+    //   ██     ██████  ██████   ██████  
+        /**TODO
+        * ! middleware e taşınacak. 
+        */
+    Route::post('/thumbnail/{id}', action: [AnimeController::class, 'setAnimeThumbnail']);
+});
+
+Route::group(['prefix'=> 'blog'], function () {
+    Route::get('/', [BlogController::class, 'index']);
+    Route::get('/{slug}', [BlogController::class, 'show']);
+
+    //████████  ██████  ██████   ██████  
+    //   ██    ██    ██ ██   ██ ██    ██ 
+    //   ██    ██    ██ ██   ██ ██    ██ 
+    //   ██    ██    ██ ██   ██ ██    ██ 
+    //   ██     ██████  ██████   ██████  
+        /**TODO
+        * ! middleware e taşınacak. 
+        */
+    Route::post('/{id}', action: [BlogController::class, 'setBlogThumbnail']);
+
 });
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
@@ -38,6 +62,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::group(['prefix' => 'video'], function () {
         Route::post('/upload', [VideoController::class, 'upload']);
+    });
+    Route::group(['prefix'=> 'blog'], function () {
+        Route::post('/', [BlogController::class, 'store']);
     });
 });
 
