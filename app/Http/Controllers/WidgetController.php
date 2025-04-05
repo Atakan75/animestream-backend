@@ -17,9 +17,7 @@ class WidgetController extends Controller
                 ->with([
                     'seasons' => function ($query) {
                         $query->with([
-                            'episodes' => function ($query) {
-                                $query->select('id', 'title', 'number', 'duration', 'thumbnail', 'video');
-                            }
+                            'episodes'
                         ]);
                     }
                 ])
