@@ -7,6 +7,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AnimeController;
 use App\Http\Controllers\VideoController;
+use App\Http\Controllers\WidgetController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\AnimeEpisodeController;
 
@@ -17,6 +18,10 @@ Route::post('/login', [UserController::class, 'login']);
 
 Route::group(['prefix'=> 'profile'], function () {
     Route::get('/{username}', [UserProfileController::class, 'show']);
+});
+
+Route::group(['prefix' => 'widget'], function () {
+    Route::get('/new-released-animes', [WidgetController::class, 'getNewReleasedAnimes']);
 });
 
 Route::group(['prefix' => 'anime'], function () {
