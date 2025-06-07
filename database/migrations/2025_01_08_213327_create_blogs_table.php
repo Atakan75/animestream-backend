@@ -15,11 +15,14 @@ return new class extends Migration
             $table->id();
             $table->integer('specs');
             $table->integer('user_id');
+            $table->string('author');
             $table->string('meta_title');
             $table->string('meta_description');
             $table->string('title');
             $table->string('slug');
             $table->text('description');
+            $table->string('category');
+            $table->string('publishDate');
             $table->timestamps();
         });
     }

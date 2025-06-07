@@ -15,7 +15,10 @@ class RoleSeeder extends Seeder
     {
         $role_names = ['super-admin', 'admin', 'moderator', 'uploader', 'user'];
         foreach ($role_names as $role_name) {
-            Role::create(['name' => $role_name]);
+            Role::create([
+                'name' => $role_name,
+                'guard_name' => 'web'
+            ]);
         }
     }
 }

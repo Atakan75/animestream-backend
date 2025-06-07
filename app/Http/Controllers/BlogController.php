@@ -40,9 +40,12 @@ class BlogController extends Controller
         $blog = Blog::create([
             'specs' => 1,
             'user_id' => $request->user()->id,
+            'author' => $request->user()->name,
             'slug' => Str::slug($request->title),
             'title' => $request->title,
             'meta_title' => $request->meta_title,
+            'category' => $request->category,
+            'publishDate' => $request->publishDate,
             'meta_description' => $request->meta_description,
             'description' => $request->description,
         ]);
