@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\File;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,7 +19,7 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name ? $this->name : null,
             'email' => $this->email ? $this->email : null,
-            'avatar' => $this->avatar ? config('app.url') . '/storage/user_avatars/' . md5($this->id) . '/' . $this->avatar->name : null,
+            'avatar' => $this->avatar ? config('app.url') . '/storage/user_avatars/' . md5($this->id) . '/' . $this->avatar->name : config('app.url') . '/storage/user_avatars/default/' . File::where('id', 1)->first()->name,
             'roles' => $this->whenLoaded('roles', function () {
                 return $this->roles->pluck('name')->toArray();
             }),
