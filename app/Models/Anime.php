@@ -40,7 +40,7 @@ class Anime extends Model
 
     public function comments()
     {
-        return $this->hasMany(Comment::class, 'commentable_id');
+        return $this->hasMany(Comment::class, 'commentable_id')->where('comment_type_id', 1);
     }
 
     public function thumbnail()
