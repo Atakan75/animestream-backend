@@ -26,7 +26,8 @@ class AnimeResource extends JsonResource
             "seasons_count" => $this->seasons_count,
             "genres" => $this->genres,
             "seasons" => SeasonResource::collection($this->whenLoaded("seasons")),
-            'thumbnail' => $this->thumbnail ? config('app.url') . '/storage/anime_thumbnails/' . md5($this->id) . '/' . $this->thumbnail->name : null,
+            "thumbnail" => $this->thumbnail ? config('app.url') . '/storage/anime_thumbnails/' . md5($this->id) . '/' . $this->thumbnail->name : null,
+            "comments" => CommentResource::collection($this->whenLoaded("comments")),
         ];
     }
 }
