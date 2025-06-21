@@ -30,21 +30,6 @@ Route::group(['prefix' => 'anime'], function () {
     Route::get('/{anime_slug}', [AnimeController::class, 'show']);
 
     Route::get('/{anime_slug}/episode/{episode_slug}', [AnimeEpisodeController::class, 'show']);
-
-    //████████  ██████  ██████   ██████  
-    //   ██    ██    ██ ██   ██ ██    ██ 
-    //   ██    ██    ██ ██   ██ ██    ██ 
-    //   ██    ██    ██ ██   ██ ██    ██ 
-    //   ██     ██████  ██████   ██████  
-        /**TODO
-        * ! middleware e taşınacak. 
-        */
-    Route::post('/thumbnail/{id}', action: [AnimeController::class, 'setAnimeThumbnail']);
-
-    Route::group(['prefix' => 'comment'], function () {
-        Route::post('/', [AnimeCommentController::class, 'store']);
-        Route::delete('/{id}', [AnimeCommentController::class, 'destroy']);
-    });
 });
 
 Route::group(['prefix'=> 'blog'], function () {
@@ -76,6 +61,16 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
     Route::group(['prefix'=> 'blog'], function () {
         Route::post('/', [BlogController::class, 'store']);
+    });
+
+    Route::group(['prefix' => 'anime'], function () {
+
+        Route::post('/thumbnail/{id}', action: [AnimeController::class, 'setAnimeThumbnail']);
+    
+        Route::group(['prefix' => 'comment'], function () {
+            Route::post('/', [AnimeCommentController::class, 'store']);
+            Route::delete('/{id}', [AnimeCommentController::class, 'destroy']);
+        });
     });
 });
 
