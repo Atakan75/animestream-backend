@@ -23,7 +23,10 @@ class AnimeEpisodeController extends Controller
                 $query->with([
                     'parent.parent.parent.parent.parent',
                     'user' => function ($query) {
-                        $query->select('id', 'name');
+                        $query->select('id', 'name')
+                            ->with([
+                                'avatar'
+                            ]);
                     },
                 ])->whereNull('parent_id')
                     ->orderBy('created_at', 'desc');
