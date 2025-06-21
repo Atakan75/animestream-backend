@@ -39,6 +39,21 @@ class FileService
         ];
     }
 
+    public function uploadAnimeEpisodeThumbnail(UploadedFile $file, $episodeID): array
+    {
+        $fileName = $this->generateFileName($file);
+        $path = $this->getAnimeEpisodeThumbnailPath($episodeID);
+
+        Storage::disk("public")->put($path . '/' . $fileName, file_get_contents($file), 'public');
+
+        return [
+            'name' => $fileName,
+            'mimetype' => $file->getClientMimeType(),
+            'type' => 'anime_episode_thumbnails',
+            'size' => $file->getSize(),
+        ];
+    }
+
     public function uploadBlogThumbnail(UploadedFile $file, $id): array
     {
         $fileName = $this->generateFileName($file);
@@ -74,5 +89,10 @@ class FileService
     private function getBlogThumbnailPath($blogId): string
     {
         return 'blog_thumbnails/' . md5($blogId);
+    }
+
+    private function getAnimeEpisodeThumbnailPath($episodeId): string
+    {
+        return 'anime_episode_thumbnails/' . md5($episodeId);
     }
 }

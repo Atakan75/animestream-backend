@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\AnimeEpisodeResource;
 use App\Models\AnimeEpisode;
+use App\Services\FileService;
+use App\Http\Requests\AnimeEpisodeThumbnailRequest;
 
 class AnimeEpisodeController extends Controller
 {
@@ -37,5 +39,28 @@ class AnimeEpisodeController extends Controller
         return response_success([
             'episode' => new AnimeEpisodeResource($animeEpisode),
         ]);
+    }
+
+    public function setEpisodeThumbnail($id, AnimeEpisodeThumbnailRequest $request, FileService $fileService)
+    {
+        $episode = AnimeEpisode::find($id);
+
+        if (!$episode) {
+            return response_error('Episode not found', 404);
+        }
+
+        $episode->thumbnail()->delete();
+
+        $fileData = $fileService->uploadAnimeEpisodeThumbnail(
+            $request->file('thumbnail'),
+            $episode->id
+        );
+
+        $thumbnail = $episode->thumbnail()->create($fileData);
+
+        return response_success([
+            'message' => 'Thumbnail uploaded successfully',
+            'thumbnail' => $thumbnail
+        ], 200);
     }
 }

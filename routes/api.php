@@ -72,6 +72,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
                 Route::post('/', [AnimeEpisodeCommentController::class, 'store']);
                 Route::delete('/{id}', [AnimeEpisodeCommentController::class, 'destroy']);
             });
+            
+            Route::post('/thumbnail/{id}', action: [AnimeEpisodeController::class, 'setEpisodeThumbnail']);
         });
 
         Route::group(['prefix' => 'comment'], function () {
