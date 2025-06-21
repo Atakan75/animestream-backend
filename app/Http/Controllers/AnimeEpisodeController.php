@@ -28,6 +28,7 @@ class AnimeEpisodeController extends Controller
                 ])->whereNull('parent_id')
                     ->orderBy('created_at', 'desc');
             },
+            'thumbnail'
         ])->where('slug', $episode)->first();
 
         return response_success([
