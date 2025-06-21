@@ -18,7 +18,7 @@ class AnimeCommentController extends Controller
             'parent_id' => $request->parent_id, // it comes when is comment is reply
             'commentable_id' => $request->anime_id,
             'comment_type_id' => 1, // 1 is anime, 2 is episode
-            'comment' => $request->content,
+            'comment' => $request->comment,
         ]);
 
         return response_success([
