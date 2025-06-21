@@ -64,6 +64,7 @@ class AnimeController extends Controller
                 'comments' => function ($query) {
                     $query->with([
                         'parent.parent.parent.parent.parent',
+                        'user'
                     ])->whereNull('parent_id');
                 },
             ])->first();
