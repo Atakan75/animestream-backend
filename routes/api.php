@@ -10,6 +10,7 @@ use App\Http\Controllers\VideoController;
 use App\Http\Controllers\WidgetController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\AnimeEpisodeController;
+use App\Http\Controllers\AnimeCommentController;
 
 use App\Http\Resources\UserResource;
 
@@ -39,6 +40,11 @@ Route::group(['prefix' => 'anime'], function () {
         * ! middleware e taşınacak. 
         */
     Route::post('/thumbnail/{id}', action: [AnimeController::class, 'setAnimeThumbnail']);
+
+    Route::group(['prefix' => 'comment'], function () {
+        Route::post('/', [AnimeCommentController::class, 'store']);
+        Route::delete('/{id}', [AnimeCommentController::class, 'destroy']);
+    });
 });
 
 Route::group(['prefix'=> 'blog'], function () {
