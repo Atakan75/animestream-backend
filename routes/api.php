@@ -28,7 +28,6 @@ Route::group(['prefix' => 'widget'], function () {
 
 Route::group(['prefix' => 'anime'], function () {
     Route::get('/', [AnimeController::class, 'index']);
-    Route::post('/thumbnail/{id}', action: [AnimeEpisodeController::class, 'setEpisodeThumbnail']);
 
     Route::get('/{anime_slug}', [AnimeController::class, 'show']);
 
@@ -74,6 +73,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
                 Route::post('/', [AnimeEpisodeCommentController::class, 'store']);
                 Route::delete('/{id}', [AnimeEpisodeCommentController::class, 'destroy']);
             });
+            Route::post('/thumbnail/{id}', action: [AnimeEpisodeController::class, 'setEpisodeThumbnail']);
         });
 
         Route::group(['prefix' => 'comment'], function () {
