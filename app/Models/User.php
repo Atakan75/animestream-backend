@@ -53,12 +53,11 @@ class User extends Authenticatable
 
     public function avatar()
     {
-        $query = $this->morphOne(File::class, 'fileable')->where('type', 'user_avatars');
-
-        if ($query->exists()) {
-            return $query;
-        }
-        return File::where('id', 1);
+        return $this->morphOne(File::class, 'fileable')
+            ->where('type', 'user_avatars')
+            ->withDefault(function () {
+                return File::find(1);
+            });
     }
 
 }

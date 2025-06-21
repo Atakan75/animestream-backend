@@ -19,7 +19,7 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name ? $this->name : null,
             'email' => $this->email ? $this->email : null,
-            'avatar' => $this->avatar ? config('app.url') . '/storage/user_avatars/' . md5($this->id) . '/' . $this->avatar->name : config('app.url') . '/storage/user_avatars/default/' . File::where('id', 1)->first()->name,
+            'avatar' => $this->avatar ? config('app.url') . '/storage/user_avatars/' . ($this->avatar->id == 1 ? "default" : md5($this->id)) . '/' . $this->avatar->name : config('app.url') . '/storage/user_avatars/default/' . File::where('id', 1)->first()->name,
             'roles' => $this->whenLoaded('roles', function () {
                 return $this->roles->pluck('name')->toArray();
             }),
