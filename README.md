@@ -16,7 +16,7 @@ Bu proje, anime içeriklerini barındıran bir izleme platformunun backend (API)
 
 ```bash
 git clone https://github.com/atakan75/animestream-backend.git
-cd anime-backend
+cd animestream-backend
 composer install
 cp .env.example .env
 php artisan key:generate
