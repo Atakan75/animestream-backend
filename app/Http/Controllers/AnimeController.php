@@ -72,6 +72,7 @@ class AnimeController extends Controller
                         }
                     ])->whereNull('parent_id');
                 },
+                'thumbnail'
             ])->first();
         });
 
@@ -81,7 +82,7 @@ class AnimeController extends Controller
 
         return response_success([
             'message' => 'Anime retrieved successfully',
-            'anime' => $anime,
+            'anime' => new AnimeResource($anime),
         ], 200);
     }
 
