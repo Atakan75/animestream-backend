@@ -14,7 +14,7 @@ class AnimeCommentController extends Controller
     {
         $comment = Comment::create([
             'specs' => 1,
-            'user_id' => $request->user()->id,
+            'user_id' => auth()->user()->id,
             'parent_id' => $request->parent_id, // it comes when is comment is reply
             'commentable_id' => $request->anime_id,
             'comment_type_id' => 1, // 1 is anime, 2 is episode
