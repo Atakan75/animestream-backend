@@ -11,6 +11,7 @@ use App\Http\Controllers\WidgetController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\AnimeEpisodeController;
 use App\Http\Controllers\AnimeCommentController;
+use App\Http\Controllers\AnimeEpisodeCommentController;
 
 use App\Http\Resources\UserResource;
 
@@ -64,9 +65,15 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
 
     Route::group(['prefix' => 'anime'], function () {
-
         Route::post('/thumbnail/{id}', action: [AnimeController::class, 'setAnimeThumbnail']);
     
+        Route::group(['prefix' => 'episode'], function () {
+            Route::group(['prefix' => 'comment'], function () {
+                Route::post('/', [AnimeEpisodeCommentController::class, 'store']);
+                Route::delete('/{id}', [AnimeEpisodeCommentController::class, 'destroy']);
+            });
+        });
+
         Route::group(['prefix' => 'comment'], function () {
             Route::post('/', [AnimeCommentController::class, 'store']);
             Route::delete('/{id}', [AnimeCommentController::class, 'destroy']);
