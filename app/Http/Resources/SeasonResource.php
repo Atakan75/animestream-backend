@@ -5,6 +5,9 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+use App\Http\Resources\AnimeResource;
+use App\Http\Resources\AnimeEpisodeResource;
+
 class SeasonResource extends JsonResource
 {
     /**
@@ -17,6 +20,7 @@ class SeasonResource extends JsonResource
         return [
             "id" => $this->id,
             "anime" => new AnimeResource($this->anime),
+            "episodes" => AnimeEpisodeResource::collection($this->episodes),
             "name" => $this->name,
         ];
     }
