@@ -16,9 +16,8 @@ class SeasonResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "anime_x" => $this->anime,
+            "anime" => new AnimeResource($this->anime),
             "name" => $this->name,
-
         ];
     }
 }
